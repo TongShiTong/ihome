@@ -1,0 +1,154 @@
+{template '_header'}
+<style type="text/css">
+    .full-content-info{max-height:42px;line-height: 21px;overflow: hidden;}
+    select.select-sm{width:120px;}
+     .table tbody tr {
+         height: 24px;
+         border: 1px solid #efefef;
+     }
+</style>
+<div class="page-header" xmlns:border-top="http://www.w3.org/1999/xhtml">
+    当前位置：<span class="text-primary">预约列表 </span>
+</div>
+
+<div class="page-content">
+<!--<form action="./index.php" method="get" class="form-horizontal form-search" role="form">
+    <input type="hidden" name="c" value="site" />
+    <input type="hidden" name="a" value="entry" />
+    <input type="hidden" name="m" value="ewei_shopv2" />
+    <input type="hidden" name="do" value="web" />
+    <input type="hidden" name="r"  value="sns.complain" />
+    <div class="page-toolbar m-b-sm m-t-sm">
+        <div class="col-sm-7">
+            <div class="btn-group btn-group-sm" style="float:left;">
+                {php echo tpl_form_field_eweishop_daterange('time', array('starttime'=>date('Y-m-d H:i', $starttime),'endtime'=>date('Y-m-d H:i', $endtime)),true);}
+            </div>
+        </div>
+
+
+        <div class="col-sm-5 pull-right">
+            <div class="input-group">
+                <div class="input-group-select">
+                    <select name='searchtime' class='form-control'  >
+                        <option value=''>不按时间</option>
+                        <option value='create' {if $_GPC['searchtime']=='create'}selected{/if}>投诉时间</option>
+                        <option value='checked' {if $_GPC['searchtime']=='checked'}selected{/if}>审核时间</option>
+                    </select>
+                </div>
+                <input type="text" class=" form-control" name='keyword' value="{$_GPC['keyword']}" placeholder="预约内容"> <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit"> 搜索</button> </span>
+            </div>
+        </div>
+
+    </div>
+</form>-->
+
+<form action="" method="post">
+    {if count($complains)>0}
+    <table class="table table-responsive" >
+        <thead class="navbar-inner">
+        <tr style="background: #f5f7f9">
+            <th style="width:25px;"></th>
+            <th style='width:40px; text-align: center;'></th>
+            <th >预约人</th>
+            <th >用户姓名</th>
+            <th >预约设计师</th>
+            <th>装修时间</th>
+            <th>希望入住时间</th>
+            <th>联系电话</th>
+            <th>所属区域</th>
+            <th style="text-align: center">状态</th>
+            <th style="width: 95px;text-align: center">操作</th>
+        </tr>
+        <tr></tr>
+        </thead>
+        <tbody>
+        {loop $complains $row}
+        <tr>
+            <td>
+                <input type='checkbox' value="{$row['id']}"/>
+            </td>
+            <td style="text-align: center;">
+                <img class="radius50" style="width:30px;height:30px;padding1px;border:1px solid #ccc" src="{php echo tomedia($row['complainant']['avatar'])}" onerror="this.src='../addons/ewei_shopv2/static/images/nopic.png'">
+            </td>
+            <td class="full">
+                <label class="label label-danger">{$row['typename']}</label>
+                <div class="full-content-info">
+                    <a href="{php echo webUrl('member/list/detail',array('id'=>$row['complainant']['id']))}">{$row['complainant']['nickname']}</a>:{$row['content']}
+                </div>
+            </td>
+            <td class="full">
+                {$row['name']}
+            </td>
+            <td>
+                <img class="radius50" style="width:30px;height:30px;padding1px;border:1px solid #ccc" src="{php echo tomedia($row['defendant']['avatar'])}" onerror="this.src='../addons/ewei_shopv2/static/images/nopic.png'">
+                <a href="{php echo webUrl('member/list/detail',array('id'=>$row['defendant']['id']))}">{$row['defendant']['nickname']}</a>
+            </td>
+            <td>
+                {$row['decoration_time']}
+            </td>
+            <td>
+                {$row['check_time']}
+            </td>
+            <td>
+                {$row['phone']}
+            </td>
+            <td>
+                {$row['province']}/{$row['city']}/{$row['area']}
+            </td>
+            <td style="text-align: center">
+
+                <label class="label {if $row['checked']==1}label-primary{elseif $row['checked']==-1}label-danger{else}label-warning{/if}" href="javascript:void(0);">
+                    {if $row['checked']==1}已配送{else}待配送{/if}
+                </label>
+            </td>
+            <td style="text-align:center;">
+                {ifp 'sns.complain.check'}
+                {if $row['checked']==0}
+                <a  href="{php echo webUrl('sns/subscribe/delivery', array('id' => $row['id'],'type'=>$row['complaint_type'],'designer_id'=>$row['designer_id']))}" class="btn btn-default btn-sm btn-op btn-operation" style="{if $row['needchecks']>0}color:red{/if}">
+                    <span data-toggle="tooltip" data-placement="top" title="" data-original-title="配送">
+                        <i class="icow icow-icon19"></i>
+                     </span>
+                </a>
+                {/if}
+                <a  href="{php echo webUrl('sns/subscribe/see', array('id' => $row['id']))}" class="btn btn-default btn-sm btn-op btn-operation" style="{if $row['needchecks']>0}color:red{/if}">
+                    <span data-toggle="tooltip" data-placement="top" title="" data-original-title="查看">
+                        <i class='icow icow-bianji2'></i>
+                     </span>
+                </a>
+                {/if}
+            </td>
+        </tr>
+        <tr style="display:none;">
+            <td colspan="7"  style='border-top:none;' class="full">
+                {$row['complaint_text']}
+                <br/>
+                {if count($row['images'])>0}
+                {loop $row['images'] $img}
+                <a href="{php echo tomedia($img)}" target="_blank"><img src="{php echo tomedia($img)}" style="width:50px;border:1px solid #ccc;padding:1px;margin:2px;" onerror="this.src='../addons/ewei_shopv2/static/images/nopic.png'"/></a>
+                {/loop}
+                {/if}
+
+            </td>
+        </tr>
+        <tr></tr>
+        {/loop}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7" class="text-right">{$pager}</td>
+            </tr>
+        </tfoot>
+    </table>
+    {else}
+    <div class='panel panel-default'>
+        <div class='panel-body' style='text-align: center;padding:30px;'>
+            暂时没有任何预约!
+        </div>
+    </div>
+    {/if}
+
+</form>
+</div>
+
+{template '_footer'}

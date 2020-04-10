@@ -1,0 +1,147 @@
+{template '_header'}
+<div class="page-header">
+    当前位置：<span class="text-primary">预约详情</span>
+</div>
+<div class="page-content">
+    <form {ife 'sns.posts' $item}action="" method="post"{/if} class="form-horizontal form-validate" enctype="multipart/form-data">
+    <div class="tab-content ">
+        <div class="tab-pane active">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-lg control-label must">预约用户</label>
+                    <div class="col-sm-6 col-xs-12 input-group">
+                        <input type="text" value="{$list['complainant']['nickname']}" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg control-label must">设计师</label>
+                    <div class="col-sm-6 col-xs-12 input-group">
+                        <input type="text" value="{if !empty($list)}{$list['defendant']['nickname']}{/if}" id="parentagent" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg control-label must">所在省份/市/区</label>
+                    <div class="col-sm-6 col-xs-12 input-group">
+                        <input type="text" value="{$list['province']}/{$list['city']}/{$list['area']}" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg control-label must">房屋面积</label>
+                    <div class="col-sm-6 col-xs-12 input-group">
+                        <input type="text" value="{$list['measure']}" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg control-label must">户型</label>
+                    <div class="col-sm-6 col-xs-12 input-group">
+                        <input type="text" value="{$list['layout']}" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg control-label must">房型</label>
+                    <div class="col-sm-6 col-xs-12 input-group">
+                        <input type="text" value="{$list['house']}" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg control-label must">家庭成员</label>
+                    <div class="col-sm-6 col-xs-12 input-group">
+                        <input type="text" value="{$list['house_member']}" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg control-label must">装修预算</label>
+                    <div class="col-sm-6 col-xs-12 input-group">
+                        <input type="text" value="{$list['budget']}" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg control-label must">装修时间</label>
+                    <div class="col-sm-6 col-xs-12 input-group">
+                        <input type="text" value="{$list['decoration_time']}" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg control-label must">入住时间</label>
+                    <div class="col-sm-6 col-xs-12 input-group">
+                        <input type="text" value="{$list['check_time']}" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg control-label must">联系电话</label>
+                    <div class="col-sm-6 col-xs-12 input-group">
+                        <input type="text" value="{$list['phone']}" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">状态</label>
+                    <div class="col-sm-9 col-xs-12">
+
+                        <label class='radio-inline'>
+                            {if $list['checked']==1}
+                            <input type='radio' value='1' name='type' checked>以配送
+                            {else}
+                            <input type='radio' value='1' name='type' checked>未配送
+                            {/if}
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg control-label">备注</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <textarea name="data[content]" class="form-control" rows="5" readonly>{$list['remarks']}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {ife 'sns.posts' $item}
+    <div class="form-group">
+        <label class="col-lg control-label"></label>
+        <div class="col-sm-9 col-xs-12">
+            <a class="btn btn-default " href="{php echo webUrl('sns/subscribe')}">返回列表</a>
+        </div>
+    </div>
+    {/if}
+    </form>
+</div>
+<<script language='javascript'>
+    function search_members() {
+        /*if ($.trim($('#search-kwd-notice').val()) == '') {
+            Tip.focus('#search-kwd-notice', '请输入关键词');
+            return;
+        }*/
+        $("#module-menus-notice").html("正在搜索....")
+        $.get('{php echo webUrl('sns/subscribe/query')}', {
+            keyword: $('#search-kwd-notice').val(), 'op': 'query', selfid: "{$id}"
+        }, function (dat) {
+            $('#module-menus-notice').html(dat);
+        });
+    }
+    function tu(name,openid){
+        $("#parentagent").val(name);
+        $("#agentid").val(openid);
+        $("#modal-module-menus-notice").hide();
+        $(".modal-backdrop ").hide();
+    }
+    function select_member(o) {
+        $("#agentid").val(o.id);
+        $("#parentagentavatar").show();
+        $("#parentagentavatar").find('img').attr('src', o.avatar);
+        $("#parentagent").val(o.nickname + "/" + o.realname + "/" + o.mobile);
+        $("#modal-module-menus-notice .close").click();
+    }
+    function chooseAgent() {
+        popwin = $('#modal-module-menus-notice').modal();
+    }
+    function clearAgent() {
+        tip.confirm("确定清除上级分销商吗？(保存后生效)", function () {
+            $('#agentid').val('');
+            $('#parentagent').val('');
+            $('#parentagentavatar').hide();
+        });
+    }
+
+</script>
+{template '_footer'}
+<!--4000097827-->

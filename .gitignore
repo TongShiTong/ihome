@@ -1,0 +1,22 @@
+.DS_Store
+node_modules/
+/thinkphp/
+/vendor/
+/runtime/
+/nbproject/
+/public/.user.ini
+/public/nginx.htaccess
+.env
+.example.env
+timer.pid
+workerman.pid
+.user.ini
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+/attachment/
+/data/

@@ -1,0 +1,91 @@
+{template '_header'}
+<link rel="stylesheet" href="../addons/ewei_shopv2/plugin/sns/template/mobile/default/images/common.css" />
+<div class='fui-page  fui-page-current' style="height: 108%;">
+	{if is_h5app()}
+	<div class="fui-header">
+		<div class="fui-header-left">
+			<a class="back"></a>
+		</div>
+		<div class="title">{if empty($this->merch_user)}{$_W['shopset']['shop']['name']}{else}{php echo $this->merch_user['merchname']}{/if}</div>
+		<div class="fui-header-right"></div>
+	</div>
+	{/if}
+	<div class='fui-content navbar'>
+		{if !empty($advs)}
+			<div class='fui-swipe' data-transition="500" data-gap="1">
+			    <div class='fui-swipe-wrapper'>
+				{loop $advs $adv}
+					<a class='fui-swipe-item external' href="{if !empty($adv['link'])}{$adv['link']}{else}javascript:;{/if}"><img src="{php echo tomedia($adv['thumb'])}" /></a>
+				{/loop}
+			    </div>
+			    <div class='fui-swipe-page'></div>
+			</div>
+		{/if}
+
+
+		<!-- {if count($category)>0}
+			<div class="fui-icon-group noborder circle" style="margin-top:0;">
+				{loop $category $cate}
+					<a href="{php echo mobileUrl('sns/board/lists', array('cid'=>$cate['id'],'page'=>1))}" data-nocache="true">
+						<div class="fui-icon-col">
+							<div class="icon"><img data-lazy="{php echo tomedia($cate['thumb'])}"/></div>
+							<div class="text">{$cate['name']}</div>
+						</div>
+					</a>
+				{/loop}
+			</div>
+		{/if} -->
+
+		<!-- <div class="fui-cell-group qa-title">
+			<div class="fui-cell">
+				<div class="fui-cell-text">推荐版块</div>
+				<a class="fui-cell-remark external" href="{php echo mobileUrl('sns/board/lists')}">全部</a>
+			</div>
+		</div> -->
+
+		<div class="fui-list-group" style="display: flex;margin: 0 0.6rem;border-radius: 0.32rem;">
+			{loop $recommands $value}
+			<a class="fui-list external" href="{php echo mobileUrl('sns/board',array('id'=>$value['id'],'mid'=>$uniacid))}" style="flex-direction: column;">
+				<div class="fui-list-media">
+					<img data-lazy="{php echo tomedia($value['logo'])}" class="round">
+				</div>
+				<div class="fui-list-inner">
+					<div class="row">
+						<div class="row-text" style="font-size: 0.7rem;">{$value['title']}</div>
+						<!-- <div class="angle"></div> -->
+					</div>
+					<!-- <div class='text'>话题数: <span class='text-danger'>{$value['postcount']}</span> 关注数:<span class="text-danger">{$value['followcount']}</span></div> -->
+					<div class="text" style="font-size: 0.5rem;">{$value['desc']}</div>
+				</div>
+			</a>
+			{/loop}
+		</div>
+
+		 {template '_copyright'}
+		 <div class="container" style="display: flex;justify-content: space-between;flex-wrap: wrap;margin: 0.6rem 0.6rem;">
+			 {loop $list $value}
+			 <div style="width:48%;border-radius: 0.32rem;overflow: hidden;background: #fff;margin-bottom: 0.6rem;">
+				 <a href="{php echo mobileUrl('sns/post',array('id'=>$value['id'],'mid'=>$uniacid))}" style="height:5.5rem">
+					 <!-- {if !empty($image)} -->
+					 <img src="{$image}" style="width: 100%;height: 5.2rem;object-fit: cover;"/>
+					 <!-- {/if} -->
+					 <div style="padding: 0 0.6rem 0rem;box-sizing: border-box;font-size: 0.85rem;color: #000;">{$value['title']}</div>
+					 <div style="padding: 0 0.6rem 0.6rem;box-sizing: border-box;font-size: 0.7rem;color: #333;">{$value['content']}</div>
+					 <div style="display: flex;align-items: center;justify-content: space-between;padding: 0 0.6rem 0.6rem;box-sizing: border-box;">
+						 <div><img style="width: 1.5rem;height: 1.5rem;object-fit: cover;" src="{$value['avatar']}" alt=""></div>
+						 <div style="font-size: 0.7rem;color: #1a1a1a;">
+							 <div>{$value['nickname']}</div>
+							 <div style="color: #666;font-size: 0.65rem;">{$value['createtime']}</div>
+						 </div>
+					 </div>
+				 </a>
+
+			 </div>
+			 {/loop}
+		</div>
+	</div>
+</div>
+
+<!-- {php #$this->footerMenus()}
+{php #template '_footer'} -->
+{php //template 'sns/board/board_item'}

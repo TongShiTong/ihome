@@ -1,0 +1,121 @@
+{template '_header'}
+<link rel="stylesheet" href="../addons/ewei_shopv2/plugin/sns/template/mobile/default/images/common.css"/>
+<style>
+    .fui-cell.complain-image{display: block;}
+    .image-remove {
+        z-index: 2!important;
+    }
+    .right_arrows {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-top: 1px solid #c3c8d6;
+        border-right: 1px solid #c3c8d6;
+        transform: rotate(45deg);
+        display: inline-block;
+    }
+    input {
+        width: 6rem;
+        text-align: right;
+        border: none;
+    }
+</style>
+<div>
+    <div class="fui-header">
+        <div class="fui-header-left">
+            <a class="back"></a>
+        </div>
+        <div class="title">预约设计师</div>
+        <div class="fui-header-right btn-edit">&nbsp;</div>
+    </div>
+    <div style="margin: 2.2rem 0.6rem 0;height: 1.24rem;line-height: 1.24rem;font-size: 0.44rem;color: #999;">*填写装修信息，方便您和设计师更加高效的沟通</div>
+    <div style="box-sizing: border-box;background: #fff;margin-bottom: 0.4rem;">
+        <div style="display: flex;justify-content: space-between;align-items: center;padding: 0.6rem;font-size: 0.6rem;color: #1A1A1A;">
+            <div>房屋所在城市</div>
+            <div>
+                浙江省杭州市
+                    <div class="right_arrows"></div>
+            </div>
+        </div>
+        <div style="display: flex;justify-content: space-between;align-items: center;padding: 0.6rem;font-size: 0.6rem;color: #1A1A1A;">
+            <div>户型</div>
+            <div>
+                <input type="text" placeholder="请选择">
+               
+                    <div class="right_arrows"></div>
+            
+            </div>
+        </div>
+        <div style="display: flex;justify-content: space-between;align-items: center;padding: 0.6rem;font-size: 0.6rem;color: #1A1A1A;">
+            <div>建筑面积</div>
+            <div>
+                <input type="text" placeholder="请填写"> ㎡        
+            </div>
+        </div>
+        <div style="display: flex;justify-content: space-between;align-items: center;padding: 0.6rem;font-size: 0.6rem;color: #1A1A1A;">
+            <div>房屋类型</div>
+            <div>
+                <input type="text" placeholder="请选择">
+             
+                    <div class="right_arrows"></div>
+                
+            </div>
+        </div>
+        
+    </div>
+    <div style="box-sizing: border-box;background: #fff;margin-bottom: 0.4rem;">
+        <div style="display: flex;justify-content: space-between;align-items: center;padding: 0.6rem;font-size: 0.6rem;color: #1A1A1A;">
+            <div>家庭常住成员</div>
+            <div>
+                <input type="text" placeholder="请选择">
+              
+                    <div class="right_arrows"></div>
+               
+            </div>
+        </div>
+        <div style="display: flex;justify-content: space-between;align-items: center;padding: 0.6rem;font-size: 0.6rem;color: #1A1A1A;">
+            <div>装修预算</div>
+            <div>
+                <input type="text" placeholder="请填写"> 万元（含设计费）
+            </div>
+        </div>
+        <div style="display: flex;justify-content: space-between;align-items: center;padding: 0.6rem;font-size: 0.6rem;color: #1A1A1A;">
+            <div>何时开始装修</div>
+            <div>
+                <input type="text" placeholder="请选择"> ㎡
+               
+            </div>
+        </div>
+        <div style="display: flex;justify-content: space-between;align-items: center;padding: 0.6rem;font-size: 0.6rem;color: #1A1A1A;">
+            <div>希望何时入住</div>
+            <div>
+                <input type="text" placeholder="请选择">
+             
+                    <div class="right_arrows"></div>
+            
+            </div>
+        </div>
+        
+        <div style="display: flex;justify-content: space-between;align-items: center;padding: 0.6rem;font-size: 0.6rem;color: #1A1A1A;">
+            <div>联系手机号码</div>
+            <div>
+                <input type="text" placeholder="请填写">
+             
+                    <div class="right_arrows"></div>
+              
+            </div>
+        </div>
+    </div>
+    <div style="box-sizing: border-box;background: #fff;">
+        <div style="padding: 0.6rem;font-size: 0.6rem;color: #1A1A1A;">
+            <div style="margin-bottom: 0.6rem;">备注（选填）</div>
+            <div>
+                <textarea style="width: 100%;border: none;" name="" id="" cols="30" rows="10" placeholder="写下想跟设计师交代的内容，如风格喜好，家庭成员的需求和禁忌，对家的憧憬..."></textarea>
+            </div>
+        </div>
+    </div>
+    <div style="box-sizing: border-box;background: #fff;">
+        <a href="{php echo mobileUrl('sns/post/subscribe_add',array('id'=>$id,'mid'=>$uniacid))}"><div style="margin: 0rem 0.6rem;color: #fff; box-sizing: border-box;border-radius: 0.2rem;background: #EB3026;height: 1.92rem;font-size: 0.72rem;line-height: 1.92rem;text-align: center;">发送给设计师</div></a>
+    </div>
+    <div style="height: 1rem;background: #fff;"></div>
+</div>
+ {template '_footer'}

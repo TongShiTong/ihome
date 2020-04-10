@@ -1,0 +1,113 @@
+{template '_header'}
+<div class="page-header">
+	当前位置：<span class="text-primary">配送提交</span>
+</div>
+<div class="page-content">
+	<form {ife 'sns.posts' $item}action="" method="post"{/if} class="form-horizontal form-validate" enctype="multipart/form-data">
+	<input type="hidden"  value="{if !empty($user)}{$user['openid']}{/if}" id='agentid' name='uid' class="form-control"  />
+	<input type="hidden"  value="{$id}" id='agentid' name='id' class="form-control"  />
+	<div class="tab-content ">
+		<div class="tab-pane active">
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-lg control-label must">设计师</label>
+					<div class="col-sm-6 col-xs-12 input-group">
+						<input type="text" value="{if !empty($user)}{$user['nickname']}{/if}" id="parentagent" class="form-control" readonly />
+						<div class='input-group-btn'>
+							<button class="btn btn-default" type="button" onclick="chooseAgent()">选择设计师</button>
+						</div>
+					</div>
+
+				</div>
+				<div class="form-group">
+					<label class="col-lg control-label">费用</label>
+					<div class="col-sm-6 col-xs-12 input-group">
+						<input type="text" name="money" class="form-control" value="" id="money"/>
+						<span class="input-group-addon">万元</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg control-label">工期</label>
+					<div class="col-sm-6 col-xs-12 input-group">
+						<input type="text" name="project" class="form-control" value="" />
+						<span class="input-group-addon">天</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg control-label">设计师电话</label>
+					<div class="col-sm-6 col-xs-12 input-group">
+						<input type="text" name="uphone" class="form-control" value="" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modal-module-menus-notice"  class="modal fade" tabindex="-1">
+		<div class="modal-dialog" style='width: 920px;'>
+			<div class="modal-content">
+				<div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3>选择设计师</h3></div>
+				<div class="modal-body" >
+					<div class="row">
+						<div class="input-group">
+							<input type="text" class="form-control" name="keyword" value="" id="search-kwd-notice" placeholder="请输入设计师昵称/姓名/手机号" />
+							<span class='input-group-btn'><button type="button" class="btn btn-default" onclick="search_members();">搜索</button></span>
+						</div>
+					</div>
+					<div id="module-menus-notice" style="padding-top:5px;"></div>
+				</div>
+				<div class="modal-footer"><a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+			</div>
+
+		</div>
+	</div>
+	{ife 'sns.posts' $item}
+	<div class="form-group">
+		<label class="col-lg control-label"></label>
+		<div class="col-sm-9 col-xs-12">
+			<input type="submit"  value="提交" class="btn btn-primary" />
+			<a class="btn btn-default " href="{php echo webUrl('sns/subscribe')}">返回列表</a>
+		</div>
+	</div>
+	{/if}
+	</form>
+</div>
+<<script language='javascript'>
+	function search_members() {
+		/*if ($.trim($('#search-kwd-notice').val()) == '') {
+            Tip.focus('#search-kwd-notice', '请输入关键词');
+            return;
+        }*/
+		$("#module-menus-notice").html("正在搜索....")
+		$.get('{php echo webUrl('sns/subscribe/query')}', {
+			keyword: $('#search-kwd-notice').val(), 'op': 'query', selfid: "{$id}"
+		}, function (dat) {
+			$('#module-menus-notice').html(dat);
+		});
+	}
+	function tu(name,openid){
+		$("#parentagent").val(name);
+		$("#agentid").val(openid);
+		$("#modal-module-menus-notice").hide();
+		$(".modal-backdrop ").hide();
+	}
+	function select_member(o) {
+		$("#agentid").val(o.id);
+		$("#parentagentavatar").show();
+		$("#parentagentavatar").find('img').attr('src', o.avatar);
+		$("#parentagent").val(o.nickname + "/" + o.realname + "/" + o.mobile);
+		$("#modal-module-menus-notice .close").click();
+	}
+	function chooseAgent() {
+		popwin = $('#modal-module-menus-notice').modal();
+	}
+	function clearAgent() {
+		tip.confirm("确定清除上级分销商吗？(保存后生效)", function () {
+			$('#agentid').val('');
+			$('#parentagent').val('');
+			$('#parentagentavatar').hide();
+		});
+	}
+
+</script>
+{template '_footer'}
+<!--4000097827-->

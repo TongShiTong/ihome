@@ -1,0 +1,14 @@
+{template '_header'}
+<script>document.addEventListener('DOMContentLoaded', function () {
+    document.documentElement.style.fontSize = document.documentElement.clientWidth / 20 + 'px'
+})
+var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') || CSS.supports('top: constant(a)'))
+document.write('<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' + (coverSupport ? ', viewport-fit=cover' : '') + '" />')</script>
+<link rel=stylesheet href=../addons/ewei_shopv2/plugin/sns/template/mobile/default/post/static/index.8e661774.css>
+<noscript><strong>Please enable JavaScript to continue.</strong></noscript>
+<form action="{php echo mobileUrl('merch/list/category')}" method="post">
+<div id=app></div>
+</form>
+<script src=../addons/ewei_shopv2/plugin/sns/template/mobile/default/post/static/js/chunk-vendors.08ff0132.js></script>
+<script src=../addons/ewei_shopv2/plugin/sns/template/mobile/default/post/static/js/index.ccccac25.js></script>
+{template '_footer'}
